@@ -45,6 +45,7 @@ export const initializeManifest = {
             ],
           },
           default: 'boolean',
+          'x-ms-visibility': 'hideInUI',
         },
         value: {
           title: 'Value',
@@ -60,7 +61,7 @@ export const initializeManifest = {
               type: { parameterReference: 'type', required: true },
             },
           },
-          'x-ms-visibility': 'important',
+          'x-ms-visibility': 'internal',
         },
       },
       required: ['name', 'type'],

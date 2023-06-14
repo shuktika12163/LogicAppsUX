@@ -75,6 +75,7 @@ export const httpManifest = {
           format: 'uri',
           title: 'URI',
           description: 'Enter request url',
+          'x-ms-visibility': 'internal',
         },
         method: {
           type: 'string',
@@ -105,15 +106,17 @@ export const httpManifest = {
           'x-ms-visibility': 'important',
         },
         body: {
+          default: 'test',
           title: 'Body',
           description: 'Enter request content',
-          'x-ms-visibility': 'important',
+          'x-ms-visibility': 'internal',
+          'x-ms-property-name-alias': 'body',
         },
         cookie: {
           type: 'string',
           title: 'Cookie',
           description: 'Enter HTTP cookie',
-          'x-ms-visibility': 'important',
+          'x-ms-visibility': 'internal',
         },
         authentication: authenticationParameter,
       },

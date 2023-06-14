@@ -1101,6 +1101,7 @@ export function loadParameterValuesArrayFromDefault(inputParameters: InputParame
   for (const inputParameter of inputParameters) if (inputParameter.default !== undefined) inputParameter.value = inputParameter.default;
 }
 
+// function of interest
 export function updateParameterWithValues(
   parameterKey: string,
   parameterValue: any,
