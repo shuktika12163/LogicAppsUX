@@ -224,6 +224,7 @@ export const convertSegmentsToString = (input: ValueSegment[], nodeMap?: Map<str
     } else if (segment.token) {
       const { value } = segment.token;
       if (value) {
+        // const string = input.length === 1 ? wrapTokenValueWithoutQuotes(value) : wrapTokenValue(value);
         const string = wrapTokenValue(value);
         text += string;
         nodeMap?.set(string, segment);

@@ -67,6 +67,7 @@ export const convertStringToSegments = (
     }
 
     if (!isInQuotedString && currChar === '@' && nextChar === '{') {
+      // Try to look for token with @ here only
       if (segmentSoFar) {
         // If we found a new token, then even if `currSegmentType` is `ValueSegmentType.TOKEN`, we treat the
         // value as a literal since the token did not close. Worth noting: This means that if a token has `@{`
@@ -75,13 +76,20 @@ export const convertStringToSegments = (
         segmentSoFar = '';
       }
       currSegmentType = ValueSegmentType.TOKEN;
+
+      // segmentSoFar += currChar;
+      // currIndex++;
+      // continue;
     }
 
     segmentSoFar += currChar;
 
     if (!isInQuotedString && currChar === '}' && currSegmentType === ValueSegmentType.TOKEN) {
+      // Try to end token with @ here only
       const token = nodeMap.get(segmentSoFar);
       if (token) {
+        // const token2 = clone(token);
+        // token2.value = '@' + token.value.substring(2, token.value.length - 1);
         returnSegments.push(token);
         currSegmentType = ValueSegmentType.LITERAL;
         segmentSoFar = '';
@@ -96,6 +104,8 @@ export const convertStringToSegments = (
   }
 
   collapseLiteralSegments(returnSegments);
+
+  convertSingleToken(returnSegments);
 
   return returnSegments;
 };
@@ -113,5 +123,16 @@ const collapseLiteralSegments = (segments: ValueSegment[]): void => {
     }
 
     index++;
+  }
+};
+
+const convertSingleToken = (segments: ValueSegment[]): void => {
+  if (
+    segments.length === 1 &&
+    segments[0].type === ValueSegmentType.LITERAL &&
+    segments[0].value.startsWith('@') &&
+    (segments[0].value.endsWith(']') || segments[0].value.endsWith(')'))
+  ) {
+    segments[0].type = ValueSegmentType.TOKEN;
   }
 };

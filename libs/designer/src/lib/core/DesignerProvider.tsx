@@ -41,6 +41,7 @@ export const DesignerProvider = ({ key, locale = 'en', options, children }: Desi
     }
     throw err;
   }, []);
+  options.hostOptions.suppressCastingForSerialize = true;
 
   return (
     <ReduxProvider store={store}>

@@ -119,9 +119,13 @@ export const convertComplexItemsToArray = (
         const segments = complexItem.value;
 
         // we need to convert to string to extract tokens to repopulate later
+
+        // this makes the pill in collapsed one not show properly... since convertstringtosegments might be expecting @{} format
+        // const stringValue = segments.length === 1 && segments[0].token?.value ? wrapTokenValueWithoutQuotes(segments[0].token.value) : convertSegmentsToString(segments, nodeMap);
         const stringValue = convertSegmentsToString(segments, nodeMap);
-        const castedValue = castParameter?.(segments, itemSchema.type, itemSchema.format, suppressCasting);
-        return suppressCasting ? stringValue : castedValue;
+        // const castedValue = castParameter?.(segments, itemSchema.type, itemSchema.format, suppressCasting);
+        // return suppressCasting ? stringValue : castedValue;
+        return stringValue;
       }
     }
   }
@@ -182,6 +186,7 @@ export const initializeComplexArrayItems = (
   setCollapsed: (b: boolean) => void
 ): void => {
   const nodeMap = new Map<string, ValueSegment>();
+  // to change here too? on init? also code view still shows brackets...
   const stringifiedCollapsedValue = convertSegmentsToString(initialValue, nodeMap);
   validationAndSerializeComplexArray(stringifiedCollapsedValue, nodeMap, itemSchema, setItems, setIsValid, setCollapsed);
 };
